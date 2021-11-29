@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import axios, { AxiosResponse } from 'axios'
+import { FC, useEffect, useState } from 'react'
 import {
   Box,
   Container,
@@ -7,12 +6,13 @@ import {
   SimpleGrid,
   useDisclosure,
 } from '@chakra-ui/react'
+import axios, { AxiosResponse } from 'axios'
+import LazyLoad from 'react-lazyload'
+
 import { CustomModal } from './components/CustomModal'
 import { Image } from './types'
 
-import LazyLoad from 'react-lazyload'
-
-const App = () => {
+const App: FC = () => {
   const [images, setImages] = useState<Image[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [selectedImage, setSelectedImage] = useState<any>(null)
@@ -34,51 +34,45 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <Container
-        className="container"
-        maxW="container.xl"
-        style={{ padding: '24px' }}
-      >
-        <CustomModal
-          image={selectedImage}
-          isOpen={isOpen}
-          onClose={onClose}
-          setImages={setImages}
-        />
+    <Container className="App" maxW="container.xl" style={{ padding: '24px' }}>
+      <CustomModal
+        image={selectedImage}
+        isOpen={isOpen}
+        onClose={onClose}
+        setImages={setImages}
+      />
 
-        <SimpleGrid minChildWidth="220px" spacing={10}>
-          {images.map((item: Image, key: number) => {
-            return (
-              <LazyLoad height={200} once>
-                <Box
-                  key={key}
+      <SimpleGrid minChildWidth="220px" spacing={10}>
+        {images.map((item: Image, key: number) => {
+          return (
+            <LazyLoad height={200} once>
+              <Box
+                key={key}
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  objectFit: 'cover',
+                  cursor: 'pointer',
+                }}
+                onClick={() => selectImage(item)}
+                maxW="sm"
+                borderRadius="lg"
+                overflow="hidden"
+              >
+                <CImage
                   style={{
                     height: '100%',
                     width: '100%',
                     objectFit: 'cover',
-                    cursor: 'pointer',
                   }}
-                  onClick={() => selectImage(item)}
-                  maxW="sm"
-                  borderRadius="lg"
-                  overflow="hidden"
-                >
-                  <CImage
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      objectFit: 'cover',
-                    }}
-                    src={item.download_url}
-                  />
-                </Box>
-              </LazyLoad>
-            )
-          })}
-        </SimpleGrid>
-      </Container>
-    </div>
+                  src={item.download_url}
+                />
+              </Box>
+            </LazyLoad>
+          )
+        })}
+      </SimpleGrid>
+    </Container>
   )
 }
 
