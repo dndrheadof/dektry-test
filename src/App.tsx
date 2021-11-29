@@ -11,6 +11,7 @@ import LazyLoad from 'react-lazyload'
 
 import { CustomModal } from './components/CustomModal'
 import { Image } from './types'
+import './styles.css'
 
 const App: FC = () => {
   const [images, setImages] = useState<Image[]>([])
@@ -45,28 +46,15 @@ const App: FC = () => {
       <SimpleGrid minChildWidth="220px" spacing={10}>
         {images.map((item: Image, key: number) => {
           return (
-            <LazyLoad height={200} once>
+            <LazyLoad height={200} once key={key}>
               <Box
-                key={key}
-                style={{
-                  height: '100%',
-                  width: '100%',
-                  objectFit: 'cover',
-                  cursor: 'pointer',
-                }}
+                className="image"
                 onClick={() => selectImage(item)}
                 maxW="sm"
                 borderRadius="lg"
                 overflow="hidden"
               >
-                <CImage
-                  style={{
-                    height: '100%',
-                    width: '100%',
-                    objectFit: 'cover',
-                  }}
-                  src={item.download_url}
-                />
+                <CImage className="image" src={item.download_url} />
               </Box>
             </LazyLoad>
           )
