@@ -16,7 +16,7 @@ import './styles.css'
 const App: FC = () => {
   const [images, setImages] = useState<Image[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [selectedImage, setSelectedImage] = useState<Image>(null)
+  const [selectedImage, setSelectedImage] = useState<Image>()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,9 +35,9 @@ const App: FC = () => {
   }
 
   return (
-    <Container className="App" maxW="container.xl" style={{ padding: '24px' }}>
+    <Container className="App" maxW="container.xl">
       <CustomModal
-        image={selectedImage}
+        image={selectedImage!}
         isOpen={isOpen}
         onClose={onClose}
         setImages={setImages}
