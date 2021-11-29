@@ -16,7 +16,7 @@ import './styles.css'
 const App: FC = () => {
   const [images, setImages] = useState<Image[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [selectedImage, setSelectedImage] = useState<any>(null)
+  const [selectedImage, setSelectedImage] = useState<Image>(null)
 
   useEffect(() => {
     const fetchData = async () => {
